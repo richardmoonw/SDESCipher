@@ -1,6 +1,8 @@
 import re
-from encryptor import encrypt
-from decryptor import decrypt
+from encryptor import transform
+
+ENCRYPTION = "encryption"
+DECRYPTION = "decryption"
 
 def main():
     option_selected = "1"
@@ -20,18 +22,14 @@ def main():
         option_selected = input("Choose an option: ")
 
         if option_selected == "1":
-            encrypt()
+            transform(ENCRYPTION, True)
         elif option_selected == "2":
-            decrypt()
+            transform(DECRYPTION, True)
         elif option_selected == "3":
-            make_attack()
+            continue
         elif option_selected == "0":
             exit(0)
         else:
             continue
-
-
-def make_attack():
-    return
 
 main()

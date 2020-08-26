@@ -1,9 +1,16 @@
 from utilities import *
 
-def encrypt():
-    # Ask the user to type the 10 bits key and the 8 bits message to be encrypted.
-    key = input("Please enter the 10 bit key to be used for encryption: ")
-    message = input("Please enter the 8 bits message to be encrypted: ")
+def transform(mode, debug):
+    if mode == "encryption":
+        # Ask the user to type the 10 bits key and the 8 bits message to be encrypted.
+        key = input("Please enter the 10 bit key to be used for encryption: ")
+        message = input("Please enter the 8 bits message to be encrypted: ")
+    elif mode == "decryption":
+        # Ask the user to type the 10 bits key and the 8 bits message to be decrypted.
+        key = input("Please enter the 10 bit key to be used for decryption: ")
+        message = input("Please enter the 8 bits message to be decrypted: ")
+    else:
+        return
 
     if validate(key, message) == 1:
         print("There was an error with the key or message you entered, try again \n")
@@ -46,7 +53,10 @@ def encrypt():
     print("The first E/P is {}".format(ep))
 
     # Process the XOR operation between the E/P and the first key.
-    ep = process_xor(ep, first_key)
+    if mode == "encryption":
+        ep = process_xor(ep, first_key)
+    elif  mode == "decryption":
+        ep = process_xor(ep, second_key)
 
     print("The new E/P is {}".format(ep))
 
@@ -85,7 +95,10 @@ def encrypt():
     print("The second E/P is {}".format(ep))
     
     # Process the XOR operation between the second E/P and the second key.
-    ep = process_xor(ep, second_key)
+    if mode == "encryption":
+        ep = process_xor(ep, second_key)
+    elif mode == "decryption":
+        ep = process_xor(ep, first_key)
 
     print("The new E/P is {}".format(ep))
 
@@ -117,4 +130,3 @@ def encrypt():
     print("Your message encrypted is: {}\n".format(ciphertext))
 
     return
-    
