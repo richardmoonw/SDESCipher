@@ -42,9 +42,9 @@ def process_xor(message, key):
     return message
 
 def decimal_to_binary(value):
-    binary = [0, 0]
+    binary = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
     while value != 0:
-        binary.insert(2, value % 2)
+        binary.insert(10, value % 2)
         value = value // 2
 
     return binary

@@ -1,5 +1,6 @@
 import re
 from encryptor import transform
+from attacker import brute_force
 
 ENCRYPTION = "encryption"
 DECRYPTION = "decryption"
@@ -22,11 +23,21 @@ def main():
         option_selected = input("Choose an option: ")
 
         if option_selected == "1":
-            transform(ENCRYPTION, True)
+            # Ask the user to type the 10 bits key and the 8 bits message to be encrypted.
+            key = input("Please enter the 10 bit key to be used for encryption: ")
+            message = input("Please enter the 8 bits message to be encrypted: ")
+
+            output = transform(ENCRYPTION, key, message, True)
+            print("Your message encrypted is {}".format(output))
         elif option_selected == "2":
-            transform(DECRYPTION, True)
+            # Ask the user to type the 10 bits key and the 8 bits message to be decrypted.
+            key = input("Please enter the 10 bit key to be used for decryption: ")
+            message = input("Please enter the 8 bits message to be decrypted: ")
+
+            output = transform(DECRYPTION, key, message, True)
+            print("Your message decrypted is {}".format(output))
         elif option_selected == "3":
-            continue
+            brute_force()
         elif option_selected == "0":
             exit(0)
         else:
