@@ -28,14 +28,16 @@ def main():
             message = input("Please enter the 8 bits message to be encrypted: ")
 
             output = transform(ENCRYPTION, key, message, True)
-            print("Your message encrypted is {}".format(output))
+            print("Your message encrypted is {}\n".format(output))
+
         elif option_selected == "2":
             # Ask the user to type the 10 bits key and the 8 bits message to be decrypted.
             key = input("Please enter the 10 bit key to be used for decryption: ")
             message = input("Please enter the 8 bits message to be decrypted: ")
 
             output = transform(DECRYPTION, key, message, True)
-            print("Your message decrypted is {}".format(output))
+            print("Your message decrypted is {}\n".format(output))
+
         elif option_selected == "3":
             brute_force()
         elif option_selected == "0":

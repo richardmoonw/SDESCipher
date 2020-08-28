@@ -73,3 +73,8 @@ def obtain_svalue(s_matrix, code):
     code = decimal_to_binary(code)[-2:]
     return code
     
+def array_to_string(array):
+    arr = array[:]
+    result = ''.join([str(elem) for elem in array])
+
+    return result

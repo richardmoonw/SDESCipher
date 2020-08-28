@@ -4,7 +4,7 @@ def transform(mode, key, message, debug):
 
     if validate(key, message) == 1:
         print("There was an error with the key or message you entered, try again \n")
-        return
+        return 1
 
     # Construct the P10 permutation key.
     p10_positions = [3, 5, 2, 7, 4, 10, 1, 9, 8, 6]
@@ -25,14 +25,20 @@ def transform(mode, key, message, debug):
     second_key = make_p8(first_part, second_part)
 
     if debug is True:
-        print("The keys are {} and {}".format(first_key, second_key))
+        fkey = array_to_string(first_key)
+        skey = array_to_string(second_key)
+        print("--------------------------------------------------")
+        print("| Key 1 and 2    | {} and {}         |".format(fkey, skey))
+        print("--------------------------------------------------")
 
     # Generate the Initial Permutation (IP).
     ip_positions = [2, 6, 3, 1, 4, 8, 5, 7]
     ip = make_permutation(ip_positions, message)
 
     if debug is True:
-        print("The IP is {}".format(ip))
+        sip = array_to_string(ip)
+        print("| IP             | {}                      |".format(sip))
+        print("--------------------------------------------------")
 
     # Divide the IP in 2 parts.
     ip_one = ip[:4]
@@ -43,7 +49,9 @@ def transform(mode, key, message, debug):
     ep = make_permutation(ep_positions, ip_two)
 
     if debug is True:
-        print("The first E/P is {}".format(ep))
+        sep = array_to_string(ep)
+        print("| First E/P      | {}                      |".format(sep))
+        print("--------------------------------------------------")
 
     # Process the XOR operation between the E/P and the first key.
     if mode == "encryption":
@@ -51,8 +59,8 @@ def transform(mode, key, message, debug):
     elif  mode == "decryption":
         ep = process_xor(ep, second_key)
 
-    if debug is True:
-        print("The new E/P is {}".format(ep))
+    # if debug is True:
+    #     print("The new E/P is {}".format(ep))
 
     # Obtain the values from the S0 matrix.
     s0_section = ep[:4]
@@ -63,7 +71,10 @@ def transform(mode, key, message, debug):
     s1_section = obtain_svalue(1, s1_section)
 
     if debug is True:
-        print("The S0 and S1 values are: {} and {}".format(s0_section, s1_section))
+        ss0 = array_to_string(s0_section)
+        ss1 = array_to_string(s1_section)
+        print("| S0 and S1      | {} and {}                     |".format(ss0, ss1))
+        print("--------------------------------------------------")
 
     # Generate the P4.
     s_section = s0_section + s1_section
@@ -71,7 +82,9 @@ def transform(mode, key, message, debug):
     p4 = make_permutation(p4_positions, s_section)
 
     if debug is True:
-        print("The P4 first output is {}".format(p4))
+        sp4 = array_to_string(p4)
+        print("| First P4       | {}                          |".format(sp4))
+        print("--------------------------------------------------")
 
     # Process the XOR operation between the first P4 and the first part of the initial permutation.
     ip_one = process_xor(p4, ip_one)
@@ -80,7 +93,9 @@ def transform(mode, key, message, debug):
     sw = ip_two[:] + ip_one[:]
 
     if debug is True:
-        print("The SW is {}".format(sw))
+        ssw = array_to_string(sw)
+        print("| SW             | {}                      |".format(ssw))
+        print("--------------------------------------------------")
 
     # Divide the SW in 2 parts.
     sw_one = sw[:4]
@@ -90,7 +105,9 @@ def transform(mode, key, message, debug):
     ep = make_permutation(ep_positions, sw_two)
 
     if debug is True:
-        print("The second E/P is {}".format(ep))
+        sep = array_to_string(ep)
+        print("| Second E/P     | {}                      |".format(sep))
+        print("--------------------------------------------------")
     
     # Process the XOR operation between the second E/P and the second key.
     if mode == "encryption":
@@ -98,8 +115,8 @@ def transform(mode, key, message, debug):
     elif mode == "decryption":
         ep = process_xor(ep, first_key)
 
-    if debug is True:
-        print("The new E/P is {}".format(ep))
+    # if debug is True:
+    #     print("The new E/P is {}".format(ep))
 
     # Obtain the values from the S0 matrix.
     s0_section = ep[:4]
@@ -110,7 +127,10 @@ def transform(mode, key, message, debug):
     s1_section = obtain_svalue(1, s1_section)
 
     if debug is True:
-        print("The S0 and S1 values are: {} and {}".format(s0_section, s1_section))
+        ss0 = array_to_string(s0_section)
+        ss1 = array_to_string(s1_section)
+        print("| S0 and S1      | {} and {}                     |".format(ss0, ss1))
+        print("--------------------------------------------------")
 
     # Generate the P4.
     s_section = s0_section + s1_section
@@ -118,7 +138,9 @@ def transform(mode, key, message, debug):
     p4 = make_permutation(p4_positions, s_section)
 
     if debug is True:
-        print("The P4 second output is {}".format(p4))
+        sp4 = array_to_string(p4)
+        print("| Second P4      | {}                          |".format(sp4))
+        print("--------------------------------------------------")
 
     # Process the XOR operation between the second P4 and the first part of the SW.
     sw_one = process_xor(p4, sw_one)
