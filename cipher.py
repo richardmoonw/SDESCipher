@@ -1,4 +1,5 @@
 import re
+import sys
 from encryptor import transform
 from attacker import brute_force
 
@@ -37,12 +38,14 @@ def main():
 
             output = transform(DECRYPTION, key, message, True)
             print("Your message decrypted is {}\n".format(output))
-
-        elif option_selected == "3":
-            brute_force()
         elif option_selected == "0":
             exit(0)
         else:
             continue
 
-main()
+if len(sys.argv) == 2:
+    brute_force(sys.argv[1])
+elif len(sys.argv) == 1:
+    main()
+else:
+    print("Invalid number of arguments")
