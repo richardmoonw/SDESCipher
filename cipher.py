@@ -17,7 +17,6 @@ def main():
         print("# What do you wanna do?          #")
         print("# 1. Encrypt Something           #")
         print("# 2. Decrypt Something           #")
-        print("# 3. Make a brute-force attack   #")
         print("# 0. Exit                        #")
         print("##################################\n")
 
